@@ -7,7 +7,8 @@ const router = express.Router();
 router.get('/project', (req, res) => {
   Project.findProject()
   .then(Project => {
-    res.json(Project);
+      const mProject= Project.map((p)=>p.completed===0?{...p,completed:false}:{...p,completed:true})
+    res.json(mProject);
   })
   .catch(err => {
     res.status(500).json({ message: 'Failed to get projects' });
@@ -27,7 +28,8 @@ router.get('/resource', (req, res) => {
 router.get('/task', (req, res) => {
     Project.findTask()
     .then(t => {
-        res.json(t);
+        const mTask= t.map((p)=>p.completed===0?{...p,completed:false}:{...p,completed:true})
+        res.json(mTask);
     })
     .catch(err => {
         res.status(500).json({ message: 'Failed to get tasks' });
